@@ -27,8 +27,8 @@
     <div class="navbar-inner">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand visible-xs" href="#">
-                    angularjsapp
+                <a class="navbar-brand visible-xs" ui-sref="home">
+                    Home
                 </a>
             </div>
         </div>
@@ -39,9 +39,6 @@
 <div role="main">
     <header class="bs-header text-center" id="overview">
         <div class="container">
-            <h1 id="app-heading">
-                Try Button 2
-            </h1>
             <a ui-sref="bluetooth" class="btn btn-success">
                 bluetooth-config
             </a>
@@ -51,7 +48,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <section id="uiview" ui-view></section>
+                <section id="uiview" ui-view>
+
+                </section>
             </div>
         </div>
     </div>
@@ -82,6 +81,7 @@
 <script src="js/application.js"></script>
 <script src="modules/core/core.js"></script>
 <script src="modules/core/config/routes.js"></script>
+<script src="modules/core/services/cordova-ready.js"></script>
 <script src="modules/core/controllers/bluetooth.js"></script>
 <script src="modules/core/controllers/home.js"></script>
 <!-- endinjector -->

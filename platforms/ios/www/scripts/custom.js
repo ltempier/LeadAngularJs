@@ -33,10 +33,6 @@ angular
 angular
     .element(document)
     .ready(function () {
-
-
-        console.log('ready')
-
         if (window.location.hash === '#_=_') {
             window.location.hash = '#!';
         }
@@ -77,22 +73,46 @@ angular
 
 angular
     .module('core')
-    .controller('BluetoothConfigController', ['$scope', '$timeout', function ($scope, $timeout,) {
+    .factory('CordovaReady',
+    function () {
+
+        var _deviceready = false;
+
+        return function (done) {
+            if (_deviceready) {
+                done('_deviceready');
+            }
+            else if (typeof window.cordova === 'object') {
+                document.addEventListener('deviceready', function () {
+                    _deviceready = true
+                    done('addEventListener');
+                }, false);
+            } else {
+                done('nada');
+            }
+        };
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('BluetoothConfigController', ['$rootScope', '$scope', '$timeout', 'CordovaReady', function ($rootScope, $scope, $timeout, CordovaReady) {
         $scope.devices = [];
+        $scope.message = [];
 
-
-        $timeout(function () {
-            $scope.message = [bluetoothle]
+        CordovaReady(function (message) {
+            $scope.message.push('CordovaReady '+message);
 
             bluetoothle.initialize(function (initializeResult) {
 
-                $scope.message.push(initializeResult)
+                $scope.message.push(initializeResult);
 
                 if (initializeResult.status == "enabled") {
                     $scope.devices = [];
                     bluetoothle.startScan(function (scanResult) {
 
-                        $scope.message.push(scanResult)
+                        $scope.message.push(scanResult);
 
                         if (scanResult.status == "scanResult") {
                             $scope.devices.push(scanResult)
@@ -102,14 +122,13 @@ angular
             }, onError, {
                 "request": true
             });
-        }, 1000)
+        });
 
 
         function onError() {
-            $scope.error = arguments
+            $scope.error = arguments;
             console.log('error ', arguments)
         }
-
     }]);
 
 'use strict';

@@ -8,22 +8,21 @@
  */
 angular
     .module('core')
-    .controller('BluetoothConfigController', ['$scope', '$timeout', function ($scope, $timeout,) {
+    .controller('BluetoothConfigController', ['$scope', '$timeout', 'CordovaReady', function ($scope, $timeout, CordovaReady) {
         $scope.devices = [];
+        $scope.message = [];
 
-
-        $timeout(function () {
-            $scope.message = [bluetoothle]
+        CordovaReady(function () {
 
             bluetoothle.initialize(function (initializeResult) {
 
-                $scope.message.push(initializeResult)
+                $scope.message.push(initializeResult);
 
                 if (initializeResult.status == "enabled") {
                     $scope.devices = [];
                     bluetoothle.startScan(function (scanResult) {
 
-                        $scope.message.push(scanResult)
+                        $scope.message.push(scanResult);
 
                         if (scanResult.status == "scanResult") {
                             $scope.devices.push(scanResult)
@@ -33,12 +32,11 @@ angular
             }, onError, {
                 "request": true
             });
-        }, 1000)
+        });
 
 
         function onError() {
-            $scope.error = arguments
+            $scope.error = arguments;
             console.log('error ', arguments)
         }
-
     }]);

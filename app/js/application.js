@@ -22,3 +22,7 @@ angular
             .bootstrap(document,
                 [ApplicationConfiguration.applicationModuleName]);
     });
+
+//document.addEventListener('deviceready', function onDeviceReady() {
+//    angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
+//}, false);
